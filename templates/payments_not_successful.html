@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#F97316"/>
+  <title>Payment Failed — NOVA EATERY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/customer.css') }}"/>
+  <link rel="shortcut icon" href="/static/icons/logo.png" type="image/x-icon">
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-bar-left">
+    <a href="{{ url_for('checkout') }}" class="btn-back">&#8592;</a>
+  </div>
+  <span class="top-bar-title">NOVA EATERY</span>
+  <div class="top-bar-right"></div>
+</header>
+
+<main class="page-content">
+  <div class="failed-page">
+    <div class="failed-icon">❌</div>
+    <h2>Payment Not Successful</h2>
+    <p style="color:var(--text-muted);font-size:0.9rem;max-width:300px;text-align:center;">
+      We couldn't process your order. This may be due to missing details or a server issue.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px;margin-top:16px;">
+      <a href="{{ url_for('checkout') }}" class="btn btn-primary btn-full">Try Again</a>
+      <a href="{{ url_for('index') }}" class="btn btn-outline btn-full">Go Home</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">© 2026 TECH NOVA. All rights reserved.</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

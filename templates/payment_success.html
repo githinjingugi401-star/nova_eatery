@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#F97316"/>
+  <title>Order Placed — NOVA EATERY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/customer.css') }}"/>
+  <link rel="shortcut icon" href="/static/icons/logo.png" type="image/x-icon">
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-bar-left"></div>
+  <div class="logo-wrap">
+    <img src="{{ url_for('static', filename='icons/logo.png') }}" alt="Nova Eatery" style="width:32px;height:32px;border-radius:6px;"/>
+    <span class="logo-text">NOVA EATERY</span>
+  </div>
+  <div class="top-bar-right"></div>
+</header>
+
+<main class="page-content">
+  <div class="success-page">
+    <div class="success-icon">✅</div>
+    <h2>Order Placed!</h2>
+    <p style="color:var(--text-muted);font-size:0.9rem;">Your order has been received. We'll confirm your payment shortly.</p>
+
+    <div class="card" style="width:100%;max-width:420px;padding:16px 20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span style="font-weight:700;font-size:1.05rem;">Order #{{ order.id }}</span>
+        <span id="liveStatusBadge" class="badge badge-pending">{{ order.status }}</span>
+      </div>
+      <div style="font-size:0.85rem;color:var(--text-muted);display:flex;flex-direction:column;gap:4px;">
+        <span>👤 {{ order.customer_name }}</span>
+        <span>🪑 Table {{ order.table_number }}</span>
+        <span>💰 KES {{ order.total_amount | int }}</span>
+      </div>
+    </div>
+
+    <div class="order-tracker" id="orderTracker">
+      <p style="font-weight:600;font-size:0.9rem;margin-bottom:4px;">Order Status</p>
+      <p style="font-size:0.78rem;color:var(--text-muted);">Auto-updating every 5 seconds</p>
+      <div class="tracker-steps">
+        {% set steps = ['Pending', 'Preparing', 'Ready', 'Served'] %}
+        {% set status_index = {'Pending': 0, 'Preparing': 1, 'Ready': 2, 'Served': 3} %}
+        {% set cur = status_index.get(order.status, 0) %}
+        {% for step in steps %}
+          <div class="tracker-step">
+            <div class="tracker-dot {% if loop.index0 < cur %}done{% elif loop.index0 == cur %}active{% endif %}">
+              {% if loop.index0 < cur %}✓{% else %}{{ loop.index }}{% endif %}
+            </div>
+            <span class="tracker-label">{{ step }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;margin-top:8px;">
+      <a href="{{ url_for('menu') }}" class="btn btn-primary btn-full">Continue Shopping</a>
+      <a href="{{ url_for('feedback') }}" class="btn btn-secondary btn-full">⭐ Leave Feedback</a>
+    </div>
+
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;text-align:center;max-width:300px;">
+      Need help? Show this screen to our staff with Order #{{ order.id }}
+    </p>
+  </div>
+</main>
+
+<footer class="site-footer">© 2026 TECH NOVA. All rights reserved.</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/polling.js') }}"></script>
+<script>startCustomerPolling({{ order.id }});</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#F97316"/>
+  <title>Menu — NOVA EATERY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/customer.css') }}"/>
+  <link rel="shortcut icon" href="/static/icons/logo.png" type="image/x-icon">
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-bar-left">
+    <a href="{{ url_for('landing') }}" class="btn-back" aria-label="Back">&#8592;</a>
+  </div>
+  <span class="top-bar-title">Our Menu</span>
+  <div class="top-bar-right">
+    <button id="openOrdersPanel" class="btn-back" aria-label="My Orders" title="My Orders">
+      <img src="{{ url_for('static', filename='icons/orders.svg') }}" width="22" height="22" alt="My Orders"/>
+      <span>My Orders</span>
+    </button>
+    <a href="{{ url_for('cart') }}" class="btn-back cart-icon-wrap" aria-label="Cart">
+      <img src="{{ url_for('static', filename='icons/cart.svg') }}" width="22" height="22" alt="Cart"/>
+      <span class="cart-badge" id="cartBadge" style="{{ 'display:flex' if cart_count > 0 else 'display:none' }}">{{ cart_count }}</span>
+    </a>
+  </div>
+</header>
+
+<nav class="tabs-scroll">
+  <button class="tab-btn" data-category="All">All</button>
+  {% for cat in categories %}
+    <button class="tab-btn" data-category="{{ cat }}">{{ cat }}</button>
+  {% endfor %}
+</nav>
+
+<main class="page-content" style="padding-top:8px">
+  {% for cat in categories %}
+    {% set cat_items = items | selectattr('category', 'equalto', cat) | list %}
+    {% if cat_items %}
+      <div class="menu-section" data-category="{{ cat }}">
+        <h2 class="menu-section-title">{{ cat }}</h2>
+        <div class="menu-grid">
+          {% for item in cat_items %}
+            <div class="food-card {% if not item.available %}unavailable{% endif %}">
+              <div class="food-name">{{ item.name }}</div>
+              <div class="food-price">KES {{ item.price | int }}</div>
+              {% if item.available %}
+                <button class="btn btn-primary btn-sm add-to-cart-btn"
+                  data-food-id="{{ item.id }}"
+                  data-price="{{ item.price }}">+ Add</button>
+              {% else %}
+                <span class="food-unavailable-label">Unavailable</span>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</main>
+
+<input type="hidden" id="cartTotalHidden" value="{{ cart_total }}"/>
+
+<div class="cart-popup" id="cartPopup">
+  <div class="cart-popup-left">
+    <div class="cart-popup-count" id="popupCount">{{ cart_count }} item{{ 's' if cart_count != 1 else '' }}</div>
+    <div class="cart-popup-total" id="popupTotal">KES —</div>
+  </div>
+  <a href="{{ url_for('cart') }}" class="cart-popup-btn">View Cart →</a>
+</div>
+
+<div class="overlay" id="panelOverlay"></div>
+
+<aside class="orders-panel" id="ordersPanel" role="dialog" aria-label="My Orders">
+  <div class="panel-handle"></div>
+  <div class="panel-header">
+    <h3>My Orders</h3>
+    <button class="panel-close" id="closePanelBtn" aria-label="Close">✕</button>
+  </div>
+  <div class="panel-body">
+    <div class="panel-lookup">
+      <input type="tel" id="orderPhoneInput" class="form-control" placeholder="e.g. 07XXXXXXXX" maxlength="15"/>
+      <button class="btn btn-primary btn-sm" id="lookupOrdersBtn">Find</button>
+    </div>
+    <div id="ordersContainer">
+      <p style="color:var(--text-muted);font-size:0.88rem;text-align:center">Enter your phone number to view your orders.</p>
+    </div>
+  </div>
+</aside>
+
+<footer class="site-footer">© 2026 TECH NOVA. All rights reserved.</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+</body>
+</html>

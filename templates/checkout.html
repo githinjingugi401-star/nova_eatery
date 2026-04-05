@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#F97316"/>
+  <title>Checkout — NOVA EATERY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/customer.css') }}"/>
+  <link rel="shortcut icon" href="/static/icons/logo.png" type="image/x-icon">
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-bar-left">
+    <a href="{{ url_for('cart') }}" class="btn-back">&#8592;</a>
+  </div>
+  <span class="top-bar-title">Checkout</span>
+  <div class="top-bar-right"></div>
+</header>
+
+<main class="page-content">
+  <form id="checkoutForm" action="{{ url_for('place_order') }}" method="POST">
+
+    <div class="checkout-section">
+      <div class="checkout-section-title">👤 Your Details</div>
+      <div class="checkout-section-body">
+        <div class="form-group">
+          <label class="form-label" for="customerName">Full Name <span style="color:red">*</span></label>
+          <input type="text" id="customerName" name="customer_name" class="form-control" placeholder="e.g. Jane Wanjiku" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="customerPhone">Phone Number <span style="color:red">*</span></label>
+          <input type="tel" id="customerPhone" name="phone_number" class="form-control" placeholder="e.g. 0712345678" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="tableNumber">Table Number <span style="color:red">*</span></label>
+          <select id="tableNumber" name="table_number" class="form-control" required>
+            <option value="">— Select your table —</option>
+            {% for i in range(1, 31) %}
+              <option value="{{ i }}">Table {{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-section">
+      <div class="checkout-section-title">🧾 Order Summary</div>
+      <div class="checkout-section-body">
+        {% for item in cart_items %}
+          <div class="order-item-row">
+            <div>
+              <span>{{ item.name }}</span>
+              <span class="order-item-qty"> × {{ item.qty }}</span>
+            </div>
+            <span>KES {{ item.subtotal | int }}</span>
+          </div>
+        {% endfor %}
+        <div class="order-item-row" style="font-weight:700;font-size:1rem;margin-top:8px;">
+          <span>Total</span>
+          <span style="color:var(--primary)">KES {{ total | int }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-section">
+      <div class="checkout-section-title">📱 M-PESA Payment Instructions</div>
+      <div class="checkout-section-body">
+        <div class="payment-box">
+          <h4>Send money to: <span class="payment-paybill">0706444779</span></h4>
+          <p style="font-size:0.88rem;margin-bottom:6px;">M-PESA name: <strong>Zipporah Mburu</strong></p>
+          <ol class="payment-steps">
+            <li><span class="step-num">1</span> Go to M-PESA on your phone</li>
+            <li><span class="step-num">2</span> Select <strong>Send Money</strong></li>
+            <li><span class="step-num">3</span> Enter Number: <strong>0706444779</strong></li>
+            <li><span class="step-num">4</span> Enter Amount: <strong>KES {{ total | int }}</strong>, confirm with PIN</li>
+          </ol>
+          <div class="payment-warning">⚠️ Please inform our staff after sending the payment so your order can be confirmed promptly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-section">
+      <div class="checkout-section-body">
+        <label class="checkbox-label">
+          <input type="checkbox" id="mpesaConfirm" required/>
+          <span>I have sent the money via M-PESA and understand my order will be confirmed by staff.</span>
+        </label>
+      </div>
+    </div>
+
+    <div style="padding:0 0 24px;">
+      <button type="submit" id="submitOrderBtn" class="btn btn-primary btn-full" style="font-size:1.05rem;padding:18px;" disabled>
+        🛒 Place Order
+      </button>
+      <p style="text-align:center;font-size:0.78rem;color:var(--text-muted);margin-top:10px;">
+        Your order will appear in the kitchen after payment is confirmed by our team.
+      </p>
+    </div>
+
+  </form>
+</main>
+
+<footer class="site-footer">© 2026 TECH NOVA. All rights reserved.</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1F2937" />
+    <title>Kitchen Login — NOVA EATERY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/kitchen.css') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="/static/icons/logo.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div class="kitchen-login-page">
+      <div class="login-card">
+        <div
+          class="logo-wrap"
+          style="justify-content: center; margin-bottom: 16px"
+        >
+          <img
+            src="{{ url_for('static', filename='icons/logo.png') }}"
+            alt="Nova Eatery"
+            style="width: 48px; height: 48px; border-radius: 10px"
+          />
+          <span class="logo-text" style="font-size: 1.2rem">NOVA EATERY</span>
+        </div>
+        <h2>Kitchen Staff Login</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for cat, msg in messages %}
+        <div class="flash flash-{{ cat }}" style="margin-bottom: 16px">
+          {{ msg }}
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <form action="{{ url_for('kitchen_login') }}" method="POST">
+          <div class="form-group" style="text-align: left">
+            <label class="form-label" for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              placeholder="Enter username"
+              required
+            />
+          </div>
+          <div class="form-group" style="text-align: left">
+            <label class="form-label" for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-full"
+            style="margin-top: 8px"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <footer
+      class="site-footer"
+      style="
+        background: #1f2937;
+        color: rgba(255, 255, 255, 0.4);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      © 2026 TECH NOVA. All rights reserved.
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+.secret_key
+database.db
+venv/
+__pycache__/
+*.py[cod]

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#F97316"/>
+  <title>Welcome — NOVA EATERY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/customer.css') }}"/>
+  <link rel="shortcut icon" href="/static/icons/logo.png" type="image/x-icon">
+</head>
+<body>
+
+<div class="landing-page">
+  <img src="{{ url_for('static', filename='icons/logo.png') }}" alt="Nova Eatery" class="landing-logo"/>
+  <h1 class="landing-brand">NOVA EATERY</h1>
+  <p class="landing-tagline">Fresh and Delicious</p>
+  <p class="landing-sub">Scan the QR code at your table to start ordering.</p>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container" style="width:100%;max-width:320px;margin-bottom:12px;">
+        {% for cat, msg in messages %}
+          <div class="flash flash-{{ cat }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="landing-actions">
+    <a href="{{ url_for('menu') }}" class="btn btn-primary">📋 View Menu</a>
+    <a href="{{ url_for('feedback') }}" class="btn btn-secondary">⭐ Leave a Feedback</a>
+  </div>
+</div>
+
+<footer class="site-footer">© 2026 TECH NOVA. All rights reserved.</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1F2937"/>
+  <title>Kitchen Dashboard — NOVA EATERY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/kitchen.css') }}"/>
+  <link rel="shortcut icon" href="/static/icons/logo.png" type="image/x-icon">
+</head>
+<body>
+
+<div class="kitchen-page">
+  <div class="kitchen-top-bar">
+    <h1>👨‍🍳 Kitchen Dashboard</h1>
+    <div class="kitchen-top-bar-right">
+      <span>Welcome, <strong style="color:#F97316;">{{ username }}</strong></span>
+      <a href="{{ url_for('kitchen_logout') }}" class="btn">Logout</a>
+    </div>
+  </div>
+
+  <div class="kitchen-body">
+    <div class="kitchen-stats">
+      <div class="kitchen-stat kitchen-stat-pending">
+        <div class="kitchen-stat-val" id="statPending">—</div>
+        <div class="kitchen-stat-label">Pending</div>
+      </div>
+      <div class="kitchen-stat kitchen-stat-preparing">
+        <div class="kitchen-stat-val" id="statPreparing">—</div>
+        <div class="kitchen-stat-label">Preparing</div>
+      </div>
+      <div class="kitchen-stat kitchen-stat-ready">
+        <div class="kitchen-stat-val" id="statReady">—</div>
+        <div class="kitchen-stat-label">Ready</div>
+      </div>
+    </div>
+
+    <div class="tabs-scroll" style="padding-left:0;margin-bottom:14px;position:static;background:transparent;border:none;">
+      <button class="filter-tab tab-btn active" data-filter="All">All Orders</button>
+      <button class="filter-tab tab-btn" data-filter="Pending">Pending</button>
+      <button class="filter-tab tab-btn" data-filter="Preparing">Preparing</button>
+      <button class="filter-tab tab-btn" data-filter="Ready">Ready</button>
+    </div>
+
+    <div class="kitchen-refresh-note">
+      <span class="pulse-dot"></span>
+      Auto-refreshing every 2 seconds
+    </div>
+
+    <div class="orders-grid" id="ordersContainer">
+      <div class="empty-state"><p>Loading orders...</p></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" style="background:#1F2937;color:rgba(255,255,255,0.4);border-top:1px solid rgba(255,255,255,0.08);">
+  © 2026 TECH NOVA. All rights reserved.
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/kitchen.js') }}"></script>
+</body>
+</html>
