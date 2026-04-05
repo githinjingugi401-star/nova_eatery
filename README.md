@@ -27,14 +27,6 @@ python app.py
 ```
 
 Open [http://localhost:5000](http://localhost:5000) after the server starts.
-
-## Default Credentials
-
-| Role | Username | Password |
-| --- | --- | --- |
-| Admin | `admin` | `admin123` |
-| Kitchen Staff | `kitchen` | `kitchen123` |
-
 ## Main Routes
 
 | Page | URL |
@@ -59,7 +51,7 @@ Open [http://localhost:5000](http://localhost:5000) after the server starts.
 
 1. Customer browses the menu and adds items to the cart.
 2. Customer proceeds to checkout and enters order details.
-3. Customer sends payment through M-PESA to `0706444779`.
+3. Customer sends payment through M-PESA to `0722000000`.
 4. Customer places the order after confirming payment has been sent.
 5. The order appears in the admin dashboard as pending payment.
 6. Admin confirms payment and releases the order to the kitchen.
